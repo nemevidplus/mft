@@ -211,6 +211,7 @@ const styles = {
   container: {
     maxWidth: "600px",
     margin: "20px auto",
+   
     padding: "20px",
     borderRadius: "10px",
     backgroundColor: "#f8f9fa",
@@ -221,6 +222,7 @@ const styles = {
     fontWeight: "bold",
     color: "#333",
     textAlign: "center",
+    marginBottom: "40px",
   },
   listItem: {
     display: "flex",
@@ -236,15 +238,33 @@ const styles = {
     fontWeight: "500",
     color: "#333",
   },
+
+
+  // .first-color { 
+  //   background: #fda403; 
+  // }
+    
+  // .second-color { 
+  //   background: #e8751a; 
+  // }
+  
+  // .third-color { 
+  //   background: #c51350; 
+  // }
+  
+  // .fourth-color { 
+  //   background: #8a1253; 
+  // }
+
   startButton: {
-    backgroundColor: "#4caf50",
+    backgroundColor: "#fda403",
     border: "none",
     borderRadius: "5px",
     padding: "5px 10px",
-    color: "#fff",
+    color: "black",
   },
   deleteButton: {
-    backgroundColor: "#f44336",
+    backgroundColor: "#c51350",
     border: "none",
     borderRadius: "5px",
     padding: "5px 10px",
@@ -253,7 +273,7 @@ const styles = {
   addButton: {
     display: "block",
     margin: "20px auto",
-    backgroundColor: "#007bff",
+    backgroundColor: "#e8751a",
     border: "none",
     borderRadius: "8px",
     padding: "10px 20px",
@@ -274,7 +294,7 @@ const styles = {
     flex: "1",
   },
   addPhaseButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: "#8a1253",
     border: "none",
     borderRadius: "5px",
     padding: "5px 10px",

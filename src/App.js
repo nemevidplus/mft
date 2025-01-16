@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import ExerciseForm from "./components/ExerciseForm";
 import Timer from "./components/Timer";
 
@@ -23,8 +24,11 @@ function App() {
       restTime: 10,
     },
   ]);
-  const [currentExercise, setCurrentExercise] = useState(null);
 
+  const [currentExercise, setCurrentExercise] = useState(null);
+  const navigate = useNavigate();
+
+  // Load exercises from localStorage when the app starts
   useEffect(() => {
     const savedExercises = localStorage.getItem("exercises");
     if (savedExercises) {
@@ -32,35 +36,61 @@ function App() {
     }
   }, []);
 
+  // Save exercises to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem("exercises", JSON.stringify(exercises));
   }, [exercises]);
 
+  // Function to add a new exercise
   const handleAddExercise = (exercise) => {
     setExercises((prev) => [...prev, { ...exercise, id: Date.now() }]);
   };
 
+  // Function to delete an exercise
   const handleDeleteExercise = (id) => {
     setExercises((prev) => prev.filter((exercise) => exercise.id !== id));
   };
 
+  // Function to start an exercise (navigates to Timer screen)
   const handleStartExercise = (exercise) => {
     setCurrentExercise(exercise);
+    navigate("/timer");
   };
 
   return (
     <div className="container">
-      <h1>Workout Timer</h1>
-      {currentExercise ? (
-        <Timer exercise={currentExercise} onFinish={() => setCurrentExercise(null)} />
-      ) : (
-        <ExerciseForm
-          exercises={exercises}
-          onStartExercise={handleStartExercise}
-          onAddExercise={handleAddExercise}
-          onDeleteExercise={handleDeleteExercise} // Pass delete function
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ExerciseForm
+              exercises={exercises}
+              onStartExercise={handleStartExercise}
+              onAddExercise={handleAddExercise}
+              onDeleteExercise={handleDeleteExercise}
+            />
+          }
         />
-      )}
+        <Route
+          path="/timer"
+          element={
+            currentExercise ? (
+              <Timer
+                exercise={currentExercise}
+                onFinish={() => {
+                  setCurrentExercise(null);
+                  navigate("/"); // Navigate back to exercise selection
+                }}
+              />
+            ) : (
+              <div style={{ textAlign: "center", marginTop: "50px" }}>
+                <p>No active exercise. Please select one.</p>
+                <button onClick={() => navigate("/")}>Go Back</button>
+              </div>
+            )
+          }
+        />
+      </Routes>
     </div>
   );
 }
